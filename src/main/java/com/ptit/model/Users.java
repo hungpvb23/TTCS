@@ -1,45 +1,42 @@
 package com.ptit.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.Data;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "users")
+@Data
 public class Users {
+
     @Id
-    private int id;
-    private String username;
-    private String password;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id", nullable = false)
+    private Integer userId;
 
-    public int getId() {
-        return id;
-    }
+    @Column(name = "fullname", nullable = false, length = 255)
+    private String fullname;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    @Column(name = "email", nullable = false, unique = true, length = 255)
+    private String email;
 
-    public String getUsername() {
-        return username;
-    }
+    @Column(name = "password_hash", nullable = false)
+    private String passwordHash;
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+    @Column(name = "phone", length = 20)
+    private String phone;
 
-    public String getPassword() {
-        return password;
-    }
+    @Column(name = "address")
+    private String address;
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    @Column(name = "role", nullable = false, length = 20)
+    @ColumnDefault("'customer'")
+    private String role;
 
-    @Override
-    public String toString() {
-        return "Users{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 }
