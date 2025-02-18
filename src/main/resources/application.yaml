@@ -1,0 +1,32 @@
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  application:
+    name: AR4U-BIZ-DEV
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    properties:
+      hibernate:
+        naming:
+          physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        jdbc:
+          batch-size: 30
+          order_inserts: true
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:postgresql://localhost:5432/postgres
+    driverClassName: org.postgresql.Driver
+    username: postgres
+    password: 15091994
+    hikari:
+      idle-timeout: 10000
+      maximum-pool-size: 3
+logging:
+  level:
+    org.hibernate.*: ERROR
+
+server:
+  port: 8080
+
