@@ -4,24 +4,24 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
-@Table(name = "order_items")
+@Table(name = "product_variants")
 @Data
-public class OrderItems {
+public class ProductVariants {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "order_item_id", nullable = false)
-    private Integer orderItemId;
-
-    @Column(name = "order_id", nullable = false)
-    private Integer orderId;
-
     @Column(name = "variant_id", nullable = false)
     private Integer variantId;
 
-    @Column(name = "quantity", nullable = false)
-    private Integer quantity;
+    @Column(name = "product_id", nullable = false)
+    private Integer productId;
+
+    @Column(name = "color", nullable = false, length = 100)
+    private String color;
 
     @Column(name = "price", nullable = false)
     private Double price;
+
+    @Column(name = "stock", nullable = false)
+    private Integer stock;
 }

@@ -2,7 +2,6 @@ package com.ptit.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
@@ -18,15 +17,14 @@ public class Orders {
     @Column(name = "order_id", nullable = false)
     private Integer orderId;
 
-    @Column(name = "user_id")
-    private Integer userId;
+    @Column(name = "customer_name", nullable = false, length = 255)
+    private String customerName;
+
+    @Column(name = "customer_email", nullable = false, length = 255)
+    private String customerEmail;
 
     @Column(name = "total_price", nullable = false)
     private BigDecimal totalPrice;
-
-    @Column(name = "status", nullable = false, length = 20)
-    @ColumnDefault("'pending'")
-    private String status;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)

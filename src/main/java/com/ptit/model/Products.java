@@ -24,18 +24,11 @@ public class Products {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "price", nullable = false)
-    private BigDecimal price;
-
-    @Column(name = "stock", nullable = false)
-    @ColumnDefault("0")
-    private Integer stock;
-
-    @Column(name = "category_id")
-    private Integer categoryId;
-
-    @Column(name = "image_url")
+    @Column(name = "image_url", length = 255)
     private String imageUrl;
+
+    @Column(name = "category_id", nullable = false)
+    private Integer categoryId;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)

@@ -6,9 +6,9 @@ import lombok.Data;
 public class ProductSearchOutput {
     private String productName;
     private String description;
-    private double price;
-    private int stock;
+    private String price;
+    private Integer stock;
     private String imageUrl;
     private String categoryName;
-    private int parentId;
+    private String color;
 }

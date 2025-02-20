@@ -1,12 +1,10 @@
-package com.ptit.service;
+package com.ptit.repo;
 
 import com.ptit.dto.ProductSearchInput;
 import com.ptit.dto.ProductSearchOutput;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public interface ProductService {
+public interface ProductRepository {
     List<ProductSearchOutput> searchProducts(ProductSearchInput searchInput);
 }
