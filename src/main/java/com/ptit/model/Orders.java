@@ -17,11 +17,8 @@ public class Orders {
     @Column(name = "order_id", nullable = false)
     private Integer orderId;
 
-    @Column(name = "customer_name", nullable = false, length = 255)
-    private String customerName;
-
-    @Column(name = "customer_email", nullable = false, length = 255)
-    private String customerEmail;
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
 
     @Column(name = "total_price", nullable = false)
     private BigDecimal totalPrice;

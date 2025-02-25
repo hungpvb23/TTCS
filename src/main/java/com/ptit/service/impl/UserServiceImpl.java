@@ -1,7 +1,7 @@
 package com.ptit.service.impl;
 
 import com.ptit.model.Users;
-import com.ptit.repo.UserRepo;
+import com.ptit.repo.UserRepository;
 import com.ptit.service.JWTService;
 import com.ptit.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
     AuthenticationManager authManager;
 
     @Autowired
-    private UserRepo repo;
+    private UserRepository repo;
 
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);

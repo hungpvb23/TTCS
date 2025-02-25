@@ -2,7 +2,7 @@ package com.ptit.service;
 
 import com.ptit.model.UserPrincipal;
 import com.ptit.model.Users;
-import com.ptit.repo.UserRepo;
+import com.ptit.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class MyUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private UserRepo userRepo;
+    private UserRepository userRepo;
 
 
     @Override

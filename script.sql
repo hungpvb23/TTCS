@@ -28,12 +28,13 @@ CREATE TABLE Product_Variants (
 );
 
 -- Tạo bảng Orders (Đơn hàng)
-CREATE TABLE Orders (
-                        order_id SERIAL PRIMARY KEY,
-                        customer_name VARCHAR(255) NOT NULL,
-                        customer_email VARCHAR(255) NOT NULL,
-                        total_price DECIMAL(12,2) NOT NULL,
-                        created_at TIMESTAMP DEFAULT NOW()
+CREATE TABLE orders (
+                               order_id serial4 NOT NULL,
+                               user_id int4 NOT NULL,  -- Tham chiếu đến bảng users
+                               total_price numeric(12, 2) NOT NULL,
+                               created_at timestamp DEFAULT now() NULL,
+                               CONSTRAINT orders_pkey PRIMARY KEY (order_id),
+                               CONSTRAINT orders_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(user_id) ON DELETE CASCADE
 );
 
 -- Tạo bảng OrderItems (Chi tiết đơn hàng, liên kết với biến thể sản phẩm)
@@ -45,6 +46,13 @@ CREATE TABLE OrderItems (
                             price DECIMAL(12,2) NOT NULL,
                             FOREIGN KEY (order_id) REFERENCES Orders(order_id) ON DELETE CASCADE,
                             FOREIGN KEY (variant_id) REFERENCES Product_Variants(variant_id) ON DELETE CASCADE
+);
+
+CREATE TABLE cart_items (
+                            id SERIAL PRIMARY KEY,
+                            user_id INT REFERENCES users(user_id) ON DELETE CASCADE,
+                            variant_id INT REFERENCES product_variants(variant_id) ON DELETE CASCADE,
+                            quantity INT NOT NULL CHECK (quantity > 0)
 );
 
 INSERT INTO Categories (name, parent_id) VALUES
@@ -62,9 +70,6 @@ INSERT INTO Product_Variants (product_id, color, price, stock) VALUES
                                                                   ((SELECT product_id FROM Products WHERE name = 'iPhone 16 Pro Max'), 'Titan Đen', 35990000, 50),
                                                                   ((SELECT product_id FROM Products WHERE name = 'iPhone 16 Pro Max'), 'Titan Xanh', 36490000, 30),
                                                                   ((SELECT product_id FROM Products WHERE name = 'iPhone 16 Pro Max'), 'Titan Trắng', 35990000, 20);
-
-INSERT INTO Orders (customer_name, customer_email, total_price) VALUES
-    ('Nguyễn Văn A', 'nguyenvana@gmail.com', 71980000);
 
 INSERT INTO OrderItems (order_id, variant_id, quantity, price) VALUES
                                                                    ((SELECT order_id FROM Orders ORDER BY order_id DESC LIMIT 1),
