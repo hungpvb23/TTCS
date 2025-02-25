@@ -17,7 +17,7 @@ CREATE TABLE Products (
                           FOREIGN KEY (category_id) REFERENCES Categories(category_id) ON DELETE CASCADE
 );
 
--- Tạo bảng ProductVariants (Biến thể sản phẩm theo màu sắc, giá, kho hàng)
+-- Tạo bảng Product_Variants (Biến thể sản phẩm theo màu sắc, giá, kho hàng)
 CREATE TABLE Product_Variants (
                                  variant_id SERIAL PRIMARY KEY,
                                  product_id INT NOT NULL,
@@ -44,7 +44,7 @@ CREATE TABLE OrderItems (
                             quantity INT NOT NULL CHECK (quantity > 0),
                             price DECIMAL(12,2) NOT NULL,
                             FOREIGN KEY (order_id) REFERENCES Orders(order_id) ON DELETE CASCADE,
-                            FOREIGN KEY (variant_id) REFERENCES ProductVariants(variant_id) ON DELETE CASCADE
+                            FOREIGN KEY (variant_id) REFERENCES Product_Variants(variant_id) ON DELETE CASCADE
 );
 
 INSERT INTO Categories (name, parent_id) VALUES
@@ -68,7 +68,7 @@ INSERT INTO Orders (customer_name, customer_email, total_price) VALUES
 
 INSERT INTO OrderItems (order_id, variant_id, quantity, price) VALUES
                                                                    ((SELECT order_id FROM Orders ORDER BY order_id DESC LIMIT 1),
-                                                                   (SELECT variant_id FROM ProductVariants WHERE color = 'Titan Đen' LIMIT 1),
+                                                                   (SELECT variant_id FROM Product_Variants WHERE color = 'Titan Đen' LIMIT 1),
     2, 35990000);
 
 
