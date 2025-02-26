@@ -1,12 +1,15 @@
 package com.ptit.service.impl;
 
 import com.ptit.dto.OrderRequestDTO;
+import com.ptit.dto.OrderResponseDTO;
 import com.ptit.model.CartItem;
 import com.ptit.model.OrderItems;
 import com.ptit.model.Orders;
 import com.ptit.model.ProductVariants;
 import com.ptit.repo.*;
+import com.ptit.repo.impl.OrdersRepositoryImpl;
 import com.ptit.service.OrderService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +18,14 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class OrderServiceImpl implements OrderService {
 
     private final ProductVariantsRepository variantRepository;
 
     private final OrdersRepository ordersRepository;
+
+    private final OrdersRepositoryImpl ordersRepositoryImpl;
 
     private final OrderItemRepository orderItemRepository;
 
@@ -81,8 +87,13 @@ public class OrderServiceImpl implements OrderService {
         orderItemRepository.saveAll(orderItems);
 
         // Xóa sản phẩm đã đặt hàng khỏi giỏ hàng
-        cartItemRepository.deleteAll(selectedCartItems);
+        cartItemRepository.deleteByIdIn(selectedCartItems.stream().map(CartItem::getId).toList());
 
         return savedOrder;
+    }
+
+    @Override
+    public List<OrderResponseDTO> getOrders(Long userId) {
+        return ordersRepositoryImpl.findAllOrdersByUserId(userId);
     }
 }

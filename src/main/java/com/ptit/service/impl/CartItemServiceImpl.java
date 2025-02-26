@@ -3,6 +3,7 @@ package com.ptit.service.impl;
 import com.ptit.dto.CartItemResponseDTO;
 import com.ptit.model.CartItem;
 import com.ptit.repo.CartItemRepository;
+import com.ptit.repo.impl.CartItemRepositoryImpl;
 import com.ptit.service.CartItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,8 @@ import java.util.List;
 public class CartItemServiceImpl implements CartItemService {
 
     private final CartItemRepository cartItemRepository;
+
+    private final CartItemRepositoryImpl cartItemRepositoryImpl;
 
     @Override
     public CartItem addToCart(Long userId, Long variantId, int quantity) {
@@ -45,6 +48,7 @@ public class CartItemServiceImpl implements CartItemService {
 
     @Override
     public List<CartItemResponseDTO> getCartItems(Long userId) {
-        return null;
+        List<CartItemResponseDTO> cartItems = cartItemRepositoryImpl.getCartItems(userId);
+        return cartItems;
     }
 }
