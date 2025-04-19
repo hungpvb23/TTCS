@@ -28,12 +28,12 @@ public class ProductRepositoryImpl implements ProductRepository {
         List<Object> params = new ArrayList<>();
 
         if (searchInput.getProductName() != null && !searchInput.getProductName().isEmpty()) {
-            sql.append(" AND p.name LIKE ?");
+            sql.append(" AND p.name iLIKE ?");
             params.add("%" + searchInput.getProductName() + "%");
         }
 
         if (searchInput.getCategoryName() != null && !searchInput.getCategoryName().isEmpty()) {
-            sql.append(" AND c.name LIKE ?");
+            sql.append(" AND c.name iLIKE ?");
             params.add("%" + searchInput.getCategoryName() + "%");
         }
 
