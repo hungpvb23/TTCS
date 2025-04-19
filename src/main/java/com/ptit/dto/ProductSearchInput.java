@@ -8,4 +8,5 @@ public class ProductSearchInput {
     private String categoryName;
     private Double minPrice;
     private Double maxPrice;
+    private Long productId;
 }

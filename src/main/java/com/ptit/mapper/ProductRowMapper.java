@@ -14,6 +14,8 @@ public class ProductRowMapper implements RowMapper<ProductSearchOutput> {
     @Override
     public ProductSearchOutput mapRow(ResultSet rs, int rowNum) throws SQLException {
         ProductSearchOutput product = new ProductSearchOutput();
+        product.setProductId(rs.getLong("product_id"));
+        product.setVariantId(rs.getLong("variant_id"));
         product.setProductName(rs.getString("product_name"));
         product.setDescription(rs.getString("description"));
         product.setPrice(decimalFormat.format(rs.getDouble("price")));

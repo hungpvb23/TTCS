@@ -19,13 +19,19 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public List<ProductSearchOutput> searchProducts(ProductSearchInput searchInput) {
-        StringBuilder sql = new StringBuilder("SELECT p.name AS product_name, p.description, pv.price, pv.stock, p.image_url, c.name AS category_name, pv.color " +
+        StringBuilder sql = new StringBuilder("SELECT p.product_id, p.name AS product_name, p.description, pv.price, pv.stock, p.image_url, c.name AS category_name, pv.color, " +
+                "pv.variant_id " +
                 "FROM products p " +
                 "JOIN categories c ON p.category_id = c.category_id " +
                 "JOIN product_variants pv ON p.product_id = pv.product_id " +
                 "WHERE 1=1");
 
         List<Object> params = new ArrayList<>();
+
+        if (searchInput.getProductId() != null) {
+            sql.append(" AND p.product_id = ?");
+            params.add(searchInput.getProductId());
+        }
 
         if (searchInput.getProductName() != null && !searchInput.getProductName().isEmpty()) {
             sql.append(" AND p.name iLIKE ?");
