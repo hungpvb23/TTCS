@@ -6,5 +6,5 @@ import java.util.List;
 @Data
 public class OrderRequestDTO {
     private Long userId;
-    private List<Long> cartItemIds;
+    private List<CartRequestDTO> productList;
 }

@@ -1,5 +1,6 @@
 package com.ptit.service.impl;
 
+import com.ptit.dto.CartRequestDTO;
 import com.ptit.dto.OrderRequestDTO;
 import com.ptit.dto.OrderResponseDTO;
 import com.ptit.model.CartItem;
@@ -8,13 +9,16 @@ import com.ptit.model.Orders;
 import com.ptit.model.ProductVariants;
 import com.ptit.repo.*;
 import com.ptit.repo.impl.OrdersRepositoryImpl;
+import com.ptit.service.CartItemService;
 import com.ptit.service.OrderService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -33,17 +37,24 @@ public class OrderServiceImpl implements OrderService {
 
     private final UserRepository userRepository;
 
+    private final CartItemService cartItemService;
+
     @Override
     public Orders createOrder(OrderRequestDTO orderRequest) {
         Long userId = orderRequest.getUserId();
+        List<CartItem> cartItems = new ArrayList<>();
 
-        List<Long> selectedCartItemIds = orderRequest.getCartItemIds();
+        List<CartRequestDTO> selectedCartItemIds = orderRequest.getProductList();
         if (selectedCartItemIds == null || selectedCartItemIds.isEmpty()) {
             throw new RuntimeException("Bạn phải chọn ít nhất một sản phẩm để đặt hàng!");
         }
 
+        selectedCartItemIds.forEach(selectedCartItemId -> {
+            cartItems.add(cartItemService.addToCart(userId, selectedCartItemId.getVariantId(), selectedCartItemId.getQuantity()));
+        });
+
         // Lấy danh sách sản phẩm đã chọn từ giỏ hàng
-        List<CartItem> selectedCartItems = cartItemRepository.findSelectedCartItems(userId, selectedCartItemIds);
+        List<CartItem> selectedCartItems = cartItemRepository.findSelectedCartItems(userId, cartItems.stream().map(CartItem::getId).collect(Collectors.toList()));
         if (selectedCartItems.isEmpty()) {
             throw new RuntimeException("Không tìm thấy sản phẩm trong giỏ hàng!");
         }
