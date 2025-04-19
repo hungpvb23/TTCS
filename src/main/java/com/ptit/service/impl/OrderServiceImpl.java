@@ -63,6 +63,8 @@ public class OrderServiceImpl implements OrderService {
         Orders orders = new Orders();
         orders.setUserId(userId);
         orders.setTotalPrice(BigDecimal.ZERO);
+        orders.setCustomer(orderRequest.getCustomer());
+        orders.setAddress(orderRequest.getAddress());
         orders = ordersRepository.save(orders);
         Integer orderId = orders.getOrderId();
 
@@ -105,6 +107,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderResponseDTO> getOrders(Long userId) {
-        return ordersRepositoryImpl.findAllOrdersByUserId(userId);
+        return ordersRepositoryImpl.findAllOrdersById(userId);
     }
 }

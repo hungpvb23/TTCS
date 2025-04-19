@@ -10,10 +10,13 @@ import java.util.Date;
 public class OrderResponseDTO {
     private Long orderId;
     private Long userId;
-    private String customerName;
-    private String customerEmail;
     private BigDecimal totalPrice;
+    private BigDecimal varitantPrice;
     private LocalDateTime createdAt;
     private Long orderItemId;
     private Long quantity;
+    private String customer;
+    private String address;
+    private String color;
+    private String productName;
 }

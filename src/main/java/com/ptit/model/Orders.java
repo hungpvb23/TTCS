@@ -26,4 +26,10 @@ public class Orders {
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
+
+    @Column(name = "customer")
+    private String customer;
+
+    @Column(name = "address")
+    private String address;
 }
